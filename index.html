@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <title>Delivery Footprint</title>
+    
+    <!-- D3.js CDN source -->
+    <script type="text/javascript" src="js/lib/d3.v4.min.js" charset="utf-8"></script>
+    <script type="text/javascript" src="js/lib/d3-scale-chromatic.v1.min.js"></script>
+    <script type="text/javascript" src="js/lib/topojson.v2.min.js"></script>
+    <!-- Linq.js for Json Query -->
+    <script type="text/javascript" src="js/lib/linq.js"></script>
+    <!-- Save SVG as PNG js -->
+    <script type="text/javascript" src="js/lib/FileSaver.js" charset="utf-8"></script>
+    <script type="text/javascript" src="js/lib/saveSvgAsPng.js" charset="utf-8"></script>
+    <!-- JQuery js -->
+    <script type="text/javascript" src="js/lib/jquery.js"></script>
+    <script type="text/javascript" src="js/lib/jquery-ui.js"></script>
+    <!-- D3 code for US maps -->
+    <script type="text/javascript" src="js/init.js"></script>
+    <!-- JQuery css -->
+    <link rel="stylesheet" type="text/css" href="css/jquery-ui.css" >
+    <!-- bulma css-->
+    <link rel="stylesheet" type="text/css" href="css/bulma.min.css">
+    <!-- CSS stylesheet -->
+    <link rel="stylesheet" type="text/css" href="css/stylesheet.css">
+    
+    <!-- Bootstrap-multiselect js/css  -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootstrap-multiselect.css" type="text/css">
+    <link rel="stylesheet" href="css/prettify.css" type="text/css">
+    <link rel="stylesheet" href="css/jquerysctipttop.css" type="text/css">
+    
+    <script type="text/javascript" src="js/lib/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/lib/bootstrap-multiselect.js"></script>
+    <script type="text/javascript" src="js/lib/prettify.js"></script>
+    
+  </head>
+  <body>
+      
+    <div id="note" style="left:1%;top:2%;position:absolute">
+        <small><b>*Note: Source data is refreshed 
+                <br> weekly and reflects avg. daily 
+                <br> volume for the last 3 months</b>
+        </small>
+    </div>
+
+    <div class="container">
+        <div id="overlay"></div>
+        <div id="loader"></div>
+        <!-- Title -->
+        <h3 class="title has-text-centered">Delivery Footprint Map</h3>
+
+        <div id="mainSelectors" align="center"></div>
+        
+        <div align="center" style="padding:5px;float:center">
+          <label for="volume">Avg. Daily Volume:</label>
+          <input type="text" id="volume" readonly style="border:0;font-weight:bold;" size="3">
+          <div class="zipvolume" style="display:inline-block;width:250px" id="slider-range"></div>
+        </div>
+        
+        <div id="map" style="height:590px">
+          <div style="float:left;">
+            <div class="legend1"> <p class="carrier-name"><span class="key-dot cou"></span>COU</p> </div>
+            <div class="legend1"> <p class="carrier-name"><span class="key-dot ups"></span>UPS</p> </div>
+            <div class="legend1"> <p class="carrier-name"><span class="key-dot fleet"></span>Fleet</p> </div>
+            <div class="legend1"> <p class="carrier-name"><span class="key-dot fedex"></span>FedEx</p> </div>
+            <div class="legend1"> <p class="carrier-name"><span class="key-dot usps"></span>USPS</p> </div>
+			
+            <br><br>
+            <input type="radio" name="displayLocation" value="off" checked="checked"> Off<br>
+            <input type="radio" name="displayLocation" value="fc"> FC <img hspace="15" style="width:10px;height:10px" src="css/dot.png"><br>
+            <input type="radio" name="displayLocation" value="hub"> Hub <img hspace="5" style="width:15px;height:15px" src="css/star.png"><br>
+            <input type="radio" name="displayLocation" value="both"> Both<br>
+            
+            <!-- ENABLE: routes toggle -->
+            <br><br>US Routes<label class="toggleswitch"><input id="routeToggleId" type="checkbox" checked onchange="routeToggle()"><span class="toggleslider round"></span></label>
+            
+            <br><br><br><br>
+            <button id="saveButton" type="button" style="margin:0px;position:relative;">Save as PNG</button>
+            
+          </div>
+            
+          <div style="float:right">
+            <div>Zip3</div>
+            <div style="padding:2px;">
+              <input type="number" id="zip3max" style="border:0;font-weight:bold;width:3.5em;" max="999" onchange="updateZipRange(this.value,true)">
+              <div style="padding:5px;margin-top:10px;margin-bottom:5px"><div style="width:10px;height:400px;" id="slider-range-vertical"></div></div>
+              <input type="number" id="zip3min" style="border:0;font-weight:bold;width:3.5em;" max="999" onchange="updateZipRange(this.value,false)">
+            </div>
+          </div>
+        </div>
+    </div>
+
+  </body>
+</html>
